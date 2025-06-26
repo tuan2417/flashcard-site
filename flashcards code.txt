@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flashcard Vocabulary App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #f3f9ff, #d0e2ff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+    h1 {
+      color: #333;
+    }
+    #flashcard {
+      background: white;
+      width: 80%;
+      max-width: 500px;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.5s;
+    }
+    #flashcard.flipped {
+      transform: rotateY(180deg);
+    }
+    .controls {
+      margin-top: 1.5rem;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 10px;
+      margin: 0.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .progress {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎓 English Flashcards</h1>
+  <div id="flashcard">Click to Flip</div>
+  <div class="controls">
+    <button onclick="prevCard()">⏮ Prev</button>
+    <button onclick="nextCard()">Next ⏭</button>
+    <button onclick="shuffleCards()">🔀 Shuffle</button>
+  </div>
+  <div class="progress" id="progress"></div>
+
+  <script>
+    const cards = [
+      {
+        front: "Gap year",
+        back: "A period of time between school and university to work, travel, etc. (Năm nghỉ học)"
+      },
+      {
+        front: "Play truant",
+        back: "To skip school without permission (Trốn học)"
+      },
+      {
+        front: "Drop out (of school)",
+        back: "To leave school before graduation (Bỏ học)"
+      },
+      {
+        front: "Undergraduate",
+        back: "A student who hasn't earned a bachelor's degree yet (Sinh viên đại học chưa tốt nghiệp)"
+      },
+      {
+        front: "Graduate (from)",
+        back: "To finish a course of study (Tốt nghiệp)"
+      },
+      {
+        front: "Certificate",
+        back: "An official document showing completion of a course (Chứng chỉ)"
+      },
+      {
+        front: "Co-education school",
+        back: "School for both genders (Trường học có cả nam và nữ học sinh)"
+      },
+      {
+        front: "Single-sex school",
+        back: "School for only one gender (Trường học chỉ có nam hoặc nữ sinh)"
+      },
+      {
+        front: "Bachelor of Arts (B.A.)",
+        back: "Bachelor's degree in arts or humanities (Bằng Cử nhân Khoa học Xã hội và Nhân văn)"
+      },
+      {
+        front: "Bachelor of Science (B.Sc.)",
+        back: "Bachelor's degree in science fields (Bằng Cử nhân Khoa học Tự nhiên)"
+      }
+      // Add more entries here as needed
+    ];
+
+    let index = 0;
+    let flipped = false;
+
+    const flashcard = document.getElementById('flashcard');
+    const progress = document.getElementById('progress');
+
+    function showCard() {
+      flashcard.textContent = flipped ? cards[index].back : cards[index].front;
+      progress.textContent = `Card ${index + 1} of ${cards.length}`;
+    }
+
+    flashcard.addEventListener('click', () => {
+      flipped = !flipped;
+      showCard();
+    });
+
+    function nextCard() {
+      index = (index + 1) % cards.length;
+      flipped = false;
+      showCard();
+    }
+
+    function prevCard() {
+      index = (index - 1 + cards.length) % cards.length;
+      flipped = false;
+      showCard();
+    }
+
+    function shuffleCards() {
+      for (let i = cards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cards[i], cards[j]] = [cards[j], cards[i]];
+      }
+      index = 0;
+      flipped = false;
+      showCard();
+    }
+
+    showCard();
+  </script>
+</body>
+</html>
+e
